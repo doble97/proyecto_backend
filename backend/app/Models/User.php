@@ -42,4 +42,26 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function decks(){
+        return $this->hasManyThrough(
+            Deck::class,
+            DeckOwner::class,
+            'fk_user',
+            'id',
+            'id',
+            'fk_deck'
+        );
+    }
+
+    public function getDeckById($id){
+            $deck = Deck::where('id', $id)
+                        ->whereHas('owners', function ($query) {
+                            $query->where('fk_user', $this->id);
+                        })
+                        ->firstOrFail();
+
+            return $deck;
+    }
+
 }
