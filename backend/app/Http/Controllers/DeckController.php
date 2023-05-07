@@ -21,7 +21,11 @@ class DeckController extends Controller
         $deck_owner->fk_user = $request->user()->id;
         $deck_owner->fk_deck = $deck->id;
         $deck_owner->save();
+<<<<<<< HEAD
         return response()->json(['success'=>true, 'message'=>'Creación exitosa', 'data'=>$deck]);
+=======
+        return response()->json(['successful'=>true, 'message'=>'Creación exitosa', 'data'=>$deck, 'propietario'=>$deck_owner]);
+>>>>>>> alexis
     }
     //DELETE
     function delete(Request $request,string $id){
@@ -29,6 +33,7 @@ class DeckController extends Controller
             try{
                 $deck = Deck::findOrFail($id);
                 $deck->delete();
+<<<<<<< HEAD
                 return response()->json(['success'=>true, 'message'=>'Registro eliminado correctamente'], 204);
 
             }catch (ModelNotFoundException $err){
@@ -48,6 +53,27 @@ class DeckController extends Controller
 
         }catch (ModelNotFoundException $err){
             return response()->json(['success'=>false, 'message'=>'Registro no encontrado'], 404);
+=======
+                return response()->json(['successful'=>true, 'message'=>'Registro eliminado correctamente'], 204);
+
+            }catch (ModelNotFoundException $err){
+                return response()->json(['successful'=>false, 'message'=>'Registro no encontrado'], 404);
+
+            }
+        }
+        return response()->json(['successful'=>false, 'message'=>'Parametros incorrectos'], 400);
+    }
+
+    //READ ALL DECKS
+    function getAll(Request $request){
+        try{
+            $decks= $request->user()->decks;
+            // $registros = Deck::whereAs
+            return response()->json(['successful'=>true, 'message'=>'Registros encontrados', 'data'=>$decks]);
+
+        }catch (ModelNotFoundException $err){
+            return response()->json(['successful'=>false, 'message'=>'Registro no encontrado'], 404);
+>>>>>>> alexis
 
         }
     }
@@ -70,4 +96,8 @@ class DeckController extends Controller
         return response()->json(['successful'=>false, 'message'=>'Parametros incorrectos'], 400);
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> alexis

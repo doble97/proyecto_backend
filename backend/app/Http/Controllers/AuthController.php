@@ -1,5 +1,3 @@
-<?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
@@ -32,4 +30,8 @@ class AuthController extends Controller
         return response()->json(['success'=>true,'message'=>'User created', 'data'=>['token'=>$token]],201);
 
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> alexis

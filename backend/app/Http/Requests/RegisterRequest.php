@@ -66,4 +66,8 @@ class RegisterRequest extends FormRequest
     // {
     //     $credentials = $this->only(['email', 'password']);
     //     return auth()->attempt($credentials);
+<<<<<<< HEAD
     // }
+=======
+    // }
+>>>>>>> alexis

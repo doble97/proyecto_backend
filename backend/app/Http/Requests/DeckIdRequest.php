@@ -44,4 +44,8 @@ class DeckIdRequest extends FormRequest
             'errors' => $validator->errors(),
         ], 422));
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> alexis

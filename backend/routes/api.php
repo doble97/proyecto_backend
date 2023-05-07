@@ -33,4 +33,14 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/deck', [DeckController::class, 'getAll']);
     Route::post('/create-deck',[DeckController::class, 'create']);
     Route::delete('/deck/{id}',[DeckController::class, 'delete']);
+<<<<<<< HEAD
 });
+=======
+
+    //WORDS
+    Route::get('/word/{id}', [WordController::class, 'getById']);
+    Route::get('/word/{fk_word}', [WordController::class, 'getAll']);
+    Route::post('/insert-word',[WordController::class, 'insertWord']);
+    Route::delete('/word/{id}',[WordController::class, 'delete']);
+});
+>>>>>>> alexis

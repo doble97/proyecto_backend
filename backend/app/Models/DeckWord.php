@@ -14,6 +14,7 @@ class DeckWord extends Model
         'fk_translation',
         'fk_deck',
     ];
+
     public function word(){
         return $this->belongsTo(User::class,'fk_word');
     }
@@ -24,5 +25,19 @@ class DeckWord extends Model
 
     public function deck(){
         return $this->belongsTo(Deck::class, 'fk_deck');
+    }
+
+    public static function getDeckWordByIdAndUser($idDeckWord, $userId){
+        $deckWord = self::where('id',$idDeckWord)->whereHas('owner',function($query) use ($userId){
+            $query->where('fk_user', $userId);
+        })->firstOrFail();
+        return $deckWord;
+    }
+
+    public static function getDeckWordByFkWordAndUser($fkwordDeckWord, $userId){
+        $deckWord = self::where('fk_word',$fkwordDeckWord)->whereHas('owner',function($query) use ($userId){
+            $query->where('fk_user', $userId);
+        })->firstOrFail();
+        return $deckWord;
     }
 }

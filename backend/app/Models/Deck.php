@@ -32,4 +32,8 @@ class Deck extends Model
         })->firstOrFail();
         return $deck;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> alexis

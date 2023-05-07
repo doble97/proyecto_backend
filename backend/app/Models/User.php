@@ -54,6 +54,20 @@ class User extends Authenticatable
         );
     }
 
+<<<<<<< HEAD
+=======
+    public function words($word){
+        return $this->hasManyThrough(
+            DeckWord::class,
+            DeckOwner::class,
+            'fk_user',
+            'fk_deck',
+            'id',
+            'fk_deck'
+        )->where('fk_word', '=', $word);
+    }
+
+>>>>>>> alexis
     public function getDeckById($id){
             $deck = Deck::where('id', $id)
                         ->whereHas('owners', function ($query) {
@@ -64,4 +78,8 @@ class User extends Authenticatable
             return $deck;
     }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> alexis

@@ -23,4 +23,8 @@ class LanguageSeeder extends Seeder
             'initials'=>'es'
         ]);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> alexis
