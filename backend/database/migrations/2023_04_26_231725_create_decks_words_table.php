@@ -12,11 +12,25 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('decks_words', function (Blueprint $table) {
+            //Codigo alexis
+            // $table->id();
+            // $table->integer('fk_word')->constrained('word_language')->onDelete('cascade');
+            // $table->integer('fk_translation')->constrained('word_language')->onDelete('cascade');
+            // $table->integer('fk_deck')->constrained('decks')->onDelete('cascade');
+            // $table->timestamps();
             $table->id();
-            $table->integer('fk_word')->constrained('word_language')->onDelete('cascade');
-            $table->integer('fk_translation')->constrained('word_language')->onDelete('cascade');
-            $table->integer('fk_deck')->constrained('decks')->onDelete('cascade');
+            $table->unsignedBigInteger('fk_word')->constrained('words')->onDelete('cascade');
+            $table->unsignedBigInteger('fk_translation')->constrained('words')->onDelete('cascade');
+            $table->unsignedBigInteger('fk_deck')->constrained('decks')->onDelete('cascade');
             $table->timestamps();
+
+            // $table->foreign('fk_word_original')
+            //     ->references('id')->on('words')
+            //     ->onDelete('cascade');
+
+            // $table->foreign('fk_word_translation')
+            //     ->references('id')->on('words')
+            //     ->onDelete('cascade');
         });
     }
 

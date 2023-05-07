@@ -12,29 +12,41 @@ class WordController extends Controller
 {
     //INSERT WORD IN DECK
     function insertWord(Request $request){
+        // //CODIGO ALEXIS
+        // $word = $request->input('word');
+        // $translation = $request->input('translation');
+        // $deck = $request->input('deck');
+        //     try{
+        //         $comp_1 = Word::findOrFail($word);
+        //     }catch (ModelNotFoundException $err){
+        //         $insertion_1 = new Word();
+        //         $insertion_1->name = $word;
+        //         $insertion_1->save();
+        //     }
+
+        //     try{
+        //         $comp_2 = Deck::findOrFail($deck);
+        //     }catch (ModelNotFoundException $err){
+        //         return response()->json(['successful'=>false, 'message'=>'Baraja no encontrada'], 400);
+        //     }
+        
+        //     $insertion_2 = new DeckWord();
+        //     $insertion_2->fk_word = $word;
+        //     $insertion_2->fk_translation = $translation;
+        //     $insertion_2->fk_deck = $deck;
+        //     $insertion_2->save();
+        //     return response()->json(['successful'=>true, 'message'=>'Registro creado correctamente']);
         $word = $request->input('word');
         $translation = $request->input('translation');
         $deck = $request->input('deck');
-            try{
-                $comp_1 = Word::findOrFail($word);
-            }catch (ModelNotFoundException $err){
-                $insertion_1 = new Word();
-                $insertion_1->name = $word;
-                $insertion_1->save();
-            }
+        $idWord = null;
+        try{
+            $idWord = Word::findOrFail();
+        }catch(ModelNotFoundException $err){
 
-            try{
-                $comp_2 = Deck::findOrFail($deck);
-            }catch (ModelNotFoundException $err){
-                return response()->json(['successful'=>false, 'message'=>'Baraja no encontrada'], 400);
-            }
+        }
         
-            $insertion_2 = new DeckWord();
-            $insertion_2->fk_word = $word;
-            $insertion_2->fk_translation = $translation;
-            $insertion_2->fk_deck = $deck;
-            $insertion_2->save();
-            return response()->json(['successful'=>true, 'message'=>'Registro creado correctamente']);
+        
     }
 
     //DELETE
