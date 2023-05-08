@@ -9,4 +9,8 @@ class Word extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name'
+    ];
+
 }

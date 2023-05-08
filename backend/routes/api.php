@@ -3,7 +3,6 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DeckController;
 use App\Http\Controllers\WordController;
-use App\Models\Deck;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +35,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::delete('/deck/{id}',[DeckController::class, 'delete']);
 
     //WORDS
-    Route::get('/word/{id}', [WordController::class, 'getById']);
+    // Route::get('/word/{id}', [WordController::class, 'getById']);
     Route::get('/word/{fk_word}', [WordController::class, 'getAll']);
     Route::post('/insert-word',[WordController::class, 'insertWord']);
     Route::delete('/word/{id}',[WordController::class, 'delete']);
