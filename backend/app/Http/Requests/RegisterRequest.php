@@ -27,7 +27,11 @@ class RegisterRequest extends FormRequest
             'name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+<<<<<<< HEAD
             'password' => 'required|string|min:8',
+=======
+            'password' => 'required|string|min:8|confirmed',
+>>>>>>> remotes/origin/jorge
         ];
     }
     public function messages()
@@ -66,4 +70,8 @@ class RegisterRequest extends FormRequest
     // {
     //     $credentials = $this->only(['email', 'password']);
     //     return auth()->attempt($credentials);
+<<<<<<< HEAD
     // }
+=======
+    // }
+>>>>>>> remotes/origin/jorge

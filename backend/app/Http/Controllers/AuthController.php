@@ -31,4 +31,8 @@ class AuthController extends Controller
         return response()->json(['success'=>true,'message'=>'User created', 'data'=>['token'=>$token]],201);
 
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> remotes/origin/jorge

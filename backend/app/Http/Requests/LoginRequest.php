@@ -62,4 +62,8 @@ class LoginRequest extends FormRequest
             'data' => $validator->errors()
         ], 401));
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> remotes/origin/jorge
