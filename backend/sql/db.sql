@@ -17,15 +17,15 @@ FOREIGN KEY (fk_deck) REFERENCES decks(id));
 create table deck_collaborators(fk_user int, fk_deck int, FOREIGN KEY (fk_user) REFERENCES users(id),
 FOREIGN KEY (fk_deck) REFERENCES decks(id));
 
-create table words(name varchar(85) primary key);
+create table words(id int primary key auto_increment, name varchar(85));
 
 CREATE TABLE decks_words (
     id int primary key auto_increment,
-    fk_word varchar(85),
-    fk_translation varchar(85),
+    fk_word int,
+    fk_translation int,
     fk_deck INT,
-    FOREIGN KEY (fk_word) REFERENCES words(name),
-    FOREIGN KEY (fk_translation) REFERENCES words(name),
+    FOREIGN KEY (fk_word) REFERENCES words(id),
+    FOREIGN KEY (fk_translation) REFERENCES words(id),
     FOREIGN KEY (fk_deck) REFERENCES decks(id)
 );
 

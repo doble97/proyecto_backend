@@ -9,6 +9,8 @@ class Deck extends Model
 {
     use HasFactory;
 
+    protected $table = 'decks';
+
     protected $fillable=[
         'name',
         'fk_languages'

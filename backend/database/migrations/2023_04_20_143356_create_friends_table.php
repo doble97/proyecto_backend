@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+
 return new class extends Migration
 {
     /**
@@ -12,8 +13,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('friends', function (Blueprint $table) {
-            $table->foreignId('fk_user_send_request')->constrained('users');
-            $table->foreignId('fk_user_receive_request')->constrained('users');
+            $table->unsignedBigInteger('fk_user_send_request');
+            $table->foreign('fk_user_send_request')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('fk_user_receive_request');
+            $table->foreign('fk_user_receive_request')->references('id')->on('users')->onDelete('cascade');
             $table->primary(['fk_user_send_request', 'fk_user_receive_request']);
             $table->timestamps();
         });

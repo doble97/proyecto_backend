@@ -8,9 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Friend extends Model
 {
     use HasFactory;
-
-    protected $table='friends';
- 
+    protected $table = 'friends';
 
     public function userSendRequest()
     {

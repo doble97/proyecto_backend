@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DeckController;
+use App\Http\Controllers\WordController;
 use App\Models\Deck;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,10 +20,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login',[AuthController::class, 'login']);
 Route::post('/register', [AuthController::class,'register']);
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
+//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//return $request->user();
 
-// });
+//});
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::get('/user', function(Request $request){
@@ -39,4 +40,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/word/{fk_word}', [WordController::class, 'getAll']);
     Route::post('/insert-word',[WordController::class, 'insertWord']);
     Route::delete('/word/{id}',[WordController::class, 'delete']);
+    Route::get('/prueba',[WordController::class, 'prueba']);
 });
+

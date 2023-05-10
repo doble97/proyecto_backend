@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Word;
 use App\Models\Deck;
 use App\Models\DeckWord;
@@ -12,29 +11,43 @@ class WordController extends Controller
 {
     //INSERT WORD IN DECK
     function insertWord(Request $request){
-        $word = $request->input('word');
-        $translation = $request->input('translation');
-        $deck = $request->input('deck');
+        $nameWord = $request->input('word');
+        $nameTranslation = $request->input('translation');
+        $nameDeck = $request->input('deck');
+
             try{
-                $comp_1 = Word::findOrFail($word);
+                $valuesDeck = Deck::where('name', '=', $nameDeck)->firstOrFail();
+                $idDeck = $valuesDeck->id;
             }catch (ModelNotFoundException $err){
-                $insertion_1 = new Word();
-                $insertion_1->name = $word;
-                $insertion_1->save();
+                return response()->json(['success'=>false, 'message'=>'Baraja no encontrada'], 400);
             }
 
             try{
-                $comp_2 = Deck::findOrFail($deck);
+                $valuesWord = Word::where('name', '=', $nameWord)->firstOrFail();
+                $idWord = $valuesWord->id;
             }catch (ModelNotFoundException $err){
-                return response()->json(['successful'=>false, 'message'=>'Baraja no encontrada'], 400);
+                $valuesWord = new Word();
+                $valuesWord->name = $nameWord;
+                $valuesWord->save();
+                $idWord = $valuesWord->id;
             }
-        
-            $insertion_2 = new DeckWord();
-            $insertion_2->fk_word = $word;
-            $insertion_2->fk_translation = $translation;
-            $insertion_2->fk_deck = $deck;
-            $insertion_2->save();
-            return response()->json(['successful'=>true, 'message'=>'Registro creado correctamente']);
+
+            try{
+                $valuesTranslation = Word::where('name', '=', $nameTranslation)->firstOrFail();
+                $idTranslation = $valuesTranslation->id;
+            }catch (ModelNotFoundException $err){
+                $valuesTranslation = new Word();
+                $valuesTranslation->name = $nameTranslation;
+                $valuesTranslation->save();
+                $idTranslation = $valuesTranslation->id;
+            }
+
+            $insertion = new DeckWord();
+            $insertion->fk_word = $idWord;
+            $insertion->fk_translation = $idTranslation;
+            $insertion->fk_deck = $idDeck;
+            $insertion->save();
+            return response()->json(['success'=>true, 'message'=>'Registro creado correctamente']);
     }
 
     //DELETE
@@ -90,4 +103,13 @@ class WordController extends Controller
         }
         return response()->json(['successful'=>false, 'message'=>'Parametros incorrectos'], 400);
     }
+
+  // function prueba(Request $request){
+  //          try{
+    //            $valuesDeck = DeckCollaborator::findOrFail('1');
+      //          return response()->json(['success'=>true]);
+        //    }catch (ModelNotFoundException $err){
+          //      return response()->json(['success'=>false, 'message'=>'Parametros incorrectos'], 400);
+            //}
+    //}
 }

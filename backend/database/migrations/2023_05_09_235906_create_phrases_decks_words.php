@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('phases_decks_words', function (Blueprint $table) {
-            $table->integer('fk_phrases')->constrained('phrases')->onDelete('cascade');
-            $table->integer('fk_decks_words')->constrained('decks_words')->onDelete('cascade');
+        Schema::create('phrases_decks_words', function (Blueprint $table) {
+            $table->unsignedBigInteger('fk_phrases');
+            $table->foreign('fk_phrases')->references('id')->on('phrases')->onDelete('cascade');
+            $table->unsignedBigInteger('fk_decks_words');
+            $table->foreign('fk_decks_words')->references('id')->on('decks_words')->onDelete('cascade');
             $table->primary(['fk_phrases', 'fk_decks_words']);
             $table->timestamps();
         });
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('phases_decks_words');
+        Schema::dropIfExists('phrases_decks_words');
     }
 };

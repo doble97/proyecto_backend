@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('decks_words', function (Blueprint $table) {
             $table->id();
-            $table->integer('fk_word')->constrained('word_language')->onDelete('cascade');
-            $table->integer('fk_translation')->constrained('word_language')->onDelete('cascade');
-            $table->integer('fk_deck')->constrained('decks')->onDelete('cascade');
+            $table->unsignedBigInteger('fk_word');
+            $table->foreign('fk_word')->references('id')->on('words')->onDelete('cascade');
+            $table->unsignedBigInteger('fk_translation');
+            $table->foreign('fk_translation')->references('id')->on('words')->onDelete('cascade');
+            $table->unsignedBigInteger('fk_deck');
+            $table->foreign('fk_deck')->references('id')->on('decks')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -8,8 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Language extends Model
 {
     use HasFactory;
+
+    protected $table = 'languages';
+
     protected $fillable = [
         'name',
         'initials'
     ];
+
+    public function deck()
+    {
+        return $this->hasOne(Deck::class, 'fk_languages');
+    }
+
 }

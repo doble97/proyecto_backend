@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('decks', function (Blueprint $table) {
             $table->id();
             $table->string('name',100);
-            $table->foreignId('fk_language')->constrained('languages');
+            $table->unsignedBigInteger('fk_language');
+            $table->foreign('fk_language')->references('id')->on('languages')->onDelete('cascade');
             $table->timestamps();
         });
     }
