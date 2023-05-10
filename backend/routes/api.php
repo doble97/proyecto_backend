@@ -36,7 +36,7 @@ Route::middleware('auth:sanctum')->group(function(){
 
     //WORDS
     // Route::get('/word/{id}', [WordController::class, 'getById']);
-    Route::get('/word/{fk_word}', [WordController::class, 'getAll']);
+    Route::get('/word/{fk_deck}', [WordController::class, 'getAll']);
     Route::post('/insert-word',[WordController::class, 'insertWord']);
-    Route::delete('/word/{id}',[WordController::class, 'delete']);
+    // Route::delete('/word/{id}',[WordController::class, 'delete']);
 });

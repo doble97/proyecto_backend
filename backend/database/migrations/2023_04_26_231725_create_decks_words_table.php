@@ -18,10 +18,11 @@ return new class extends Migration
             // $table->integer('fk_translation')->constrained('word_language')->onDelete('cascade');
             // $table->integer('fk_deck')->constrained('decks')->onDelete('cascade');
             // $table->timestamps();
+            //Mi codigo
             $table->id();
-            $table->unsignedBigInteger('fk_word')->constrained('words')->onDelete('cascade');
-            $table->unsignedBigInteger('fk_translation')->constrained('words')->onDelete('cascade');
-            $table->unsignedBigInteger('fk_deck')->constrained('decks')->onDelete('cascade');
+            $table->foreignId('fk_word')->constrained('words')->onDelete('cascade');
+            $table->foreignId('fk_translation')->constrained('words')->onDelete('cascade');
+            $table->foreignId('fk_deck')->constrained('decks')->onDelete('cascade');
             $table->timestamps();
 
             // $table->foreign('fk_word_original')

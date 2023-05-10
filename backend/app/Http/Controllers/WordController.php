@@ -8,6 +8,7 @@ use App\Models\DeckWord;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class WordController extends Controller
 {
@@ -60,6 +61,7 @@ class WordController extends Controller
             $deckWord->fk_word = $wordInsertada->id;
             $deckWord->fk_translation = $translationInsertada->id;
             $deckWord->fk_deck = $deck->id;
+            $deckWord->save();
             return response()->json(['success'=>true, 'message'=>'Carta insertada', 'data'=>$deckWord]);
 
         }catch (ModelNotFoundException $err){
@@ -69,7 +71,7 @@ class WordController extends Controller
     }
 
     //DELETE
-    function delete(Request $request,string $id){
+    function delete(Request $request, $id){
         if($request->route('id') &&  is_numeric($request->route('id'))){
             try{
                 $word = DeckWord::findOrFail($id);
@@ -85,7 +87,7 @@ class WordController extends Controller
     }
 
     //READ ALL WORDS ON A DECK
-    function getAll(Request $request, string $fk_word){
+    function getAll(Request $request, $fk_deck){
     //     if($request->route('$fk_word') && is_numeric($request->route('$fk_word'))){
     //         try{
     //             $userId = $request->user()->id;
@@ -112,7 +114,33 @@ class WordController extends Controller
         //         return response('errr');
         //     }
         // } 
-        return response('error');
+        if($request->route('fk_deck') && is_numeric($request->route('fk_deck'))){
+            try {
+                $userId = $request->user()->id;
+                $deck = Deck::getDeckByIdAndUser($fk_deck, $userId);
+     
+                
+                // $words = DB::table('words as t1')
+                //             ->join('decks_words', 't1.id', '=', 'decks_words.fk_word')
+                //             ->join('words as t2', 't2.id', '=', 'decks_words.fk_translation')
+                //             ->join('decks', 'decks_words.fk_deck', '=', 'decks.id')
+                //             ->join('deck_owners', 'decks.id', '=', 'deck_owners.fk_deck')
+                //             ->where('deck_owners.fk_user', '=', $userId)
+                //             ->where('decks.id', '=', $deck->id)
+                //             ->select('t1.id as idWord', 't1.name as word', 't2.id as idTranslation', 't2.name as translation')
+                //             ->get();
+                $words = $deck->words()
+                ->select('words.id as idWord', 'words.name as word', 'translations.id as idTranslation', 'translations.name as translation')
+                ->join('words as translations', 'decks_words.fk_translation', '=', 'translations.id')
+                ->get();
+
+
+                return response()->json(['data'=>$words]);
+            } catch (ModelNotFoundException $err) {
+                return response()->json(['success'=>false, 'message'=>'Baraja no encontrada']);
+            }
+        }
+        return response('erddor');
 
 }
 

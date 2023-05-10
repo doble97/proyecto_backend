@@ -12,5 +12,9 @@ class Word extends Model
     protected $fillable = [
         'name'
     ];
-
+    public function decks()
+    {
+        return $this->belongsToMany(Deck::class, 'decks_words', 'fk_word', 'fk_deck');
+    }
+    
 }

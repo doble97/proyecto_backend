@@ -32,4 +32,9 @@ class Deck extends Model
         })->firstOrFail();
         return $deck;
     }
+    public function words()
+{
+    return $this->belongsToMany(Word::class, 'decks_words', 'fk_deck', 'fk_word');
+}
+
 }
