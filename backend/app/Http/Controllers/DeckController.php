@@ -69,5 +69,4 @@ class DeckController extends Controller
         }
         return response()->json(['successful'=>false, 'message'=>'Parametros incorrectos'], 400);
     }
-
 }

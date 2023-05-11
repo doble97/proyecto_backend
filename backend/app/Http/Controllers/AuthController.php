@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     //
-    public function login(LoginRequest $request){
+    public function login(loginRequest $request){
 
         $token = $request->user()->createToken('MyApp')->plainTextToken;
         return response()->json([
@@ -19,7 +19,7 @@ class AuthController extends Controller
             'data'=>['token'=>$token, 'user'=>$request->user()],],200);
     }
 
-    public function register(RegisterRequest $request){
+    public function register(registerRequest $request){
         $user = new User();
         $user->name = $request->input('name');
         $user->last_name = $request->input('last_name');
@@ -31,8 +31,4 @@ class AuthController extends Controller
         return response()->json(['success'=>true,'message'=>'User created', 'data'=>['token'=>$token]],201);
 
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> remotes/origin/jorge

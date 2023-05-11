@@ -9,8 +9,6 @@ class Deck extends Model
 {
     use HasFactory;
 
-    protected $table = 'decks';
-
     protected $fillable=[
         'name',
         'fk_languages'
@@ -25,13 +23,19 @@ class Deck extends Model
     public function owner()
     {
         //dice que el modelo DeckOwner tiene la primary key de Deck
-        return $this->hasOne(DeckOwner::class, 'fk_deck');
+        return $this->hasMany(DeckOwner::class, 'fk_deck');
     }
+
 
     public static function getDeckByIdAndUser($idDeck, $userId){
         $deck = self::where('id',$idDeck)->whereHas('owner',function($query) use ($userId){
             $query->where('fk_user', $userId);
         })->firstOrFail();
         return $deck;
+    }
+    
+    public function words()
+    {
+        return $this->belongsToMany(Word::class, 'decks_words', 'fk_deck', 'fk_word');
     }
 }

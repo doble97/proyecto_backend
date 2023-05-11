@@ -8,18 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Word extends Model
 {
     use HasFactory;
-    protected $table = 'words';
-    protected $fillable=[
+
+    protected $fillable = [
         'name'
     ];
-
-    public function deckWordWord()
+    public function decks()
     {
-        return $this->hasOne(DeckWord::class, 'fk_word');
+        return $this->belongsToMany(Deck::class, 'decks_words', 'fk_word', 'fk_deck');
     }
-
-    public function deckWordTranslation()
-    {
-        return $this->hasOne(DeckWord::class, 'fk_translation');
-    }
+    
 }

@@ -8,17 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class DeckWord extends Model
 {
     use HasFactory;
-
     protected $table = 'decks_words';
 
     protected $fillable = [
         'fk_word',
         'fk_translation',
-        'fk_deck'
+        'fk_deck',
     ];
-
     public function word(){
-        return $this->belongsTo(Word::class,'fk_word');
+        return $this->belongsTo(Word::class, 'fk_word');
     }
 
     public function translation(){
@@ -28,8 +26,30 @@ class DeckWord extends Model
     public function deck(){
         return $this->belongsTo(Deck::class, 'fk_deck');
     }
+//alexis
+    // public function word(){
+    //     return $this->belongsTo(User::class,'fk_word');
+    // }
 
-    public function phraseDeckWord(){
-        return $this->hasOne(PhraseDeckWord::class, 'fk_decks_words');
-    }
+    // public function translation(){
+    //     return $this->belongsTo(Deck::class, 'fk_translation');
+    // }
+
+    // public function deck(){
+    //     return $this->belongsTo(Deck::class, 'fk_deck');
+    // }
+
+    // public static function getDeckWordByIdAndUser($idDeckWord, $userId){
+    //     $deckWord = self::where('id',$idDeckWord)->whereHas('owner',function($query) use ($userId){
+    //         $query->where('fk_user', $userId);
+    //     })->firstOrFail();
+    //     return $deckWord;
+    // }
+
+    // public static function getDeckWordByFkWordAndUser($fkwordDeckWord, $userId){
+    //     $deckWord = self::where('fk_word',$fkwordDeckWord)->whereHas('owner',function($query) use ($userId){
+    //         $query->where('fk_user', $userId);
+    //     })->firstOrFail();
+    //     return $deckWord;
+    // }
 }

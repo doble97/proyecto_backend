@@ -1,12 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-<<<<<<< HEAD
 use App\Http\Controllers\DeckController;
 use App\Http\Controllers\WordController;
+use App\Http\Controllers\pruebaController;
 use App\Models\Deck;
-=======
->>>>>>> remotes/origin/jorge
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,7 +21,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/login',[AuthController::class, 'login']);
 Route::post('/register', [AuthController::class,'register']);
-<<<<<<< HEAD
 //Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //return $request->user();
 
@@ -44,10 +41,6 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/word/{fk_word}', [WordController::class, 'getAll']);
     Route::post('/insert-word',[WordController::class, 'insertWord']);
     Route::delete('/word/{id}',[WordController::class, 'delete']);
-    Route::get('/prueba',[WordController::class, 'prueba']);
-=======
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
->>>>>>> remotes/origin/jorge
+    
+    Route::get('/prueba',[pruebaController::class, 'prueba']);
 });
-
