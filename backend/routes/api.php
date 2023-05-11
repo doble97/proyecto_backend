@@ -22,7 +22,7 @@ Route::post('/register', [AuthController::class,'register']);
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 
-// });
+//});
 
 Route::middleware('auth:sanctum')->group(function(){
     Route::get('/user', function(Request $request){
@@ -38,5 +38,13 @@ Route::middleware('auth:sanctum')->group(function(){
     // Route::get('/word/{id}', [WordController::class, 'getById']);
     Route::get('/word/{fk_deck}', [WordController::class, 'getAll']);
     Route::post('/insert-word',[WordController::class, 'insertWord']);
-    // Route::delete('/word/{id}',[WordController::class, 'delete']);
+    Route::delete('/word/{id}',[WordController::class, 'delete']);
+    
+    Route::get('/prueba',[pruebaController::class, 'prueba']);
+    Route::fallback(function(){
+        return response()->json([
+            'success'=>false,
+            'message'=> 'Error en la autenticación. Token no valido'
+        ],401);
+    });
 });

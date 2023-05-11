@@ -12,26 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('decks_words', function (Blueprint $table) {
-            //Codigo alexis
-            // $table->id();
-            // $table->integer('fk_word')->constrained('word_language')->onDelete('cascade');
-            // $table->integer('fk_translation')->constrained('word_language')->onDelete('cascade');
-            // $table->integer('fk_deck')->constrained('decks')->onDelete('cascade');
-            // $table->timestamps();
-            //Mi codigo
             $table->id();
             $table->foreignId('fk_word')->constrained('words')->onDelete('cascade');
             $table->foreignId('fk_translation')->constrained('words')->onDelete('cascade');
             $table->foreignId('fk_deck')->constrained('decks')->onDelete('cascade');
             $table->timestamps();
 
-            // $table->foreign('fk_word_original')
-            //     ->references('id')->on('words')
-            //     ->onDelete('cascade');
-
-            // $table->foreign('fk_word_translation')
-            //     ->references('id')->on('words')
-            //     ->onDelete('cascade');
         });
     }
 
@@ -43,3 +29,10 @@ return new class extends Migration
         Schema::dropIfExists('decks_words');
     }
 };
+// $table->unsignedBigInteger('fk_word');
+// $table->foreign('fk_word')->references('id')->on('words')->onDelete('cascade');
+// $table->unsignedBigInteger('fk_translation');
+// $table->foreign('fk_translation')->references('id')->on('words')->onDelete('cascade');
+// $table->unsignedBigInteger('fk_deck');
+// $table->foreign('fk_deck')->references('id')->on('decks')->onDelete('cascade');
+//Ultimo comic de alexis que volvio a añadir esto

@@ -42,7 +42,7 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-
+    //Usuario obtiene sus decks a través de una tabla intermedia llamada DeckOwner
     public function decks(){
         return $this->hasManyThrough(
             Deck::class,

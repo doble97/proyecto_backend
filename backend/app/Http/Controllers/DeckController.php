@@ -29,7 +29,7 @@ class DeckController extends Controller
             try{
                 $deck = Deck::findOrFail($id);
                 $deck->delete();
-                return response()->json(['success'=>true, 'message'=>'Registro eliminado correctamente'], 204);
+                return response()->json([],204);
 
             }catch (ModelNotFoundException $err){
                 return response()->json(['success'=>false, 'message'=>'Registro no encontrado'], 404);

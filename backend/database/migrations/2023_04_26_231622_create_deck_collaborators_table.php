@@ -12,8 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('deck_collaborators', function (Blueprint $table) {
-            $table->foreignId('fk_user')->constrained('users')->onDelete('cascade');
-            $table->foreignId('fk_deck')->constrained('decks')->onDelete('cascade');
+            $table->unsignedBigInteger('fk_user');
+            $table->foreign('fk_user')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('fk_deck');
+            $table->foreign('fk_deck')->references('id')->on('decks')->onDelete('cascade');
             $table->timestamps();
         });
     }
