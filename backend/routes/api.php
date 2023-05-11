@@ -39,7 +39,7 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/word/{fk_deck}', [WordController::class, 'getAll']);
     Route::post('/insert-word',[WordController::class, 'insertWord']);
     Route::delete('/word/{id}',[WordController::class, 'delete']);
-    Route::post('/update/{id}',[WordController::class, 'update']);
+    Route::put('/update',[WordController::class, 'update']);
     Route::fallback(function(){
         return response()->json([
             'success'=>false,
