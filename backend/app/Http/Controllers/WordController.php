@@ -73,4 +73,22 @@ class WordController extends Controller
 
 }
 
-}
+    // UPDATE WORD
+    function update(Request $request, $id){
+        if($request->route('id') && is_numeric($request->route('id'))){
+            try{
+            $wordInsert = $request->input('word');
+            $translationInsert = $request->input('translation'); 
+            $word = Word::firstOrCreate(['name'=>$wordInsert]);
+            $translation = Word::firstOrCreate(['name'=>$translationInsert]);
+            $deckWord = DeckWord::findOrFail($id);
+            $deckWord->fk_word = $word->id;
+            $deckWord->fk_translation = $translation->id;
+            $deckWord->save();
+            return response()->json(['success'=>true, 'message'=>'Palabra actualizada', 'data'=>$deckWord]);
+            } catch(ModelNotFoundException $err){
+                return response()->json(['success'=>false, 'message'=>'Registro no encontrado'], 404);
+            } 
+    }
+    return response()->json(['success'=>false, 'message'=>'Error en la peticion'], 400);
+}}

@@ -23,7 +23,7 @@ class Deck extends Model
     public function owner()
     {
         //dice que el modelo DeckOwner tiene la primary key de Deck
-        return $this->hasMany(DeckOwner::class, 'fk_deck');
+        return $this->hasOne(DeckOwner::class, 'fk_deck');
     }
 
 

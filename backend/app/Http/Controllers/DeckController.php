@@ -40,7 +40,7 @@ class DeckController extends Controller
     }
 
     //READ ALL DECKS
-    function getAll(Request $request ){
+    function getAll(Request $request){
         try{
             $decks= $request->user()->decks;
             // $registros = Deck::whereAs
@@ -55,7 +55,7 @@ class DeckController extends Controller
 
     //READ AN DECK
     function getById(Request $request, $id){
-        if($request->route('id') &&  is_numeric($request->route('id'))){
+        if($request->route('id') && is_numeric($request->route('id'))){
             try{
                 $userId = $request->user()->id;
                 $deck = Deck::getDeckByIdAndUser($id, $userId);
