@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DeckIdRequest;
 use App\Models\Deck;
 use App\Models\DeckOwner;
+use App\Models\Language;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
@@ -70,4 +71,27 @@ class DeckController extends Controller
         return response()->json(['success'=>false, 'message'=>'Parametros incorrectos'], 400);
     }
 
+    // UPDATE DECK
+    function update(Request $request){
+        $idDeck = $request->input('id');
+        $nameInsert = $request->input('name');
+        $idLanguage = $request->input('fk_language'); 
+
+        try{
+            $deck = Deck::findOrFail($idDeck);
+        }catch(ModelNotFoundException $err){
+            return response()->json(['success'=>false, 'message'=>'Error en la peticion'], 400);
+        }
+        
+        try{
+            Language::findOrFail($idLanguage);
+        }catch(ModelNotFoundException){
+            return response()->json(['success'=>false, 'message'=>'Lenguaje no encontrado']);
+        }
+
+        $deck->name = $nameInsert;
+        $deck->fk_language = $idLanguage;
+        $deck->save();
+        return response()->json(['success'=>true, 'message'=>'Palabra actualizada', 'data'=>$deck]);
+    }
 }

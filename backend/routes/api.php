@@ -33,13 +33,15 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/deck', [DeckController::class, 'getAll']);
     Route::post('/create-deck',[DeckController::class, 'create']);
     Route::delete('/deck/{id}',[DeckController::class, 'delete']);
+    Route::put('/update-deck',[DeckController::class, 'update']);
+
 
     //WORDS
     // Route::get('/word/{id}', [WordController::class, 'getById']);
     Route::get('/word/{fk_deck}', [WordController::class, 'getAll']);
     Route::post('/insert-word',[WordController::class, 'insertWord']);
     Route::delete('/word/{id}',[WordController::class, 'delete']);
-    Route::put('/update',[WordController::class, 'update']);
+    Route::put('/update-word',[WordController::class, 'update']);
     Route::fallback(function(){
         return response()->json([
             'success'=>false,
