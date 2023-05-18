@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name',100);
             $table->unsignedBigInteger('fk_language');
             $table->foreign('fk_language')->references('id')->on('languages')->onDelete('cascade');
+            $table->boolean('shared')->default(false);
             $table->timestamps();
         });
     }

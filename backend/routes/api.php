@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DeckController;
 use App\Http\Controllers\WordController;
+use App\Http\Controllers\CountDeckController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,12 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/user', function(Request $request){
         return $request->user();
     });
+    //COUNT DECKS
+    Route::get('/count-all', [CountDeckController::class, 'countAll']);
+    Route::get('/count-shared', [CountDeckController::class, 'countShared']);
+    Route::get('/count-collaborator', [CountDeckController::class, 'countCollaborator']);
+
+
     //DECKS
     Route::get('/deck/{id}', [DeckController::class, 'getById']);
     Route::get('/deck', [DeckController::class, 'getAll']);
@@ -49,3 +56,4 @@ Route::middleware('auth:sanctum')->group(function(){
         ],401);
     });
 });
+

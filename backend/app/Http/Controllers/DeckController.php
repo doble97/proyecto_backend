@@ -43,7 +43,7 @@ class DeckController extends Controller
     //READ ALL DECKS
     function getAll(Request $request){
         try{
-            $decks= $request->user()->decks;
+            $decks= $request->user()->decks; 
             // $registros = Deck::whereAs
             return response()->json(['success'=>true, 'message'=>'Registros encontrados', 'data'=>$decks]);
 
@@ -75,7 +75,7 @@ class DeckController extends Controller
     function update(Request $request){
         $idDeck = $request->input('id');
         $nameInsert = $request->input('name');
-        $idLanguage = $request->input('fk_language'); 
+        $idLanguage = $request->input('fk_language');
 
         try{
             $deck = Deck::findOrFail($idDeck);
@@ -93,5 +93,9 @@ class DeckController extends Controller
         $deck->fk_language = $idLanguage;
         $deck->save();
         return response()->json(['success'=>true, 'message'=>'Palabra actualizada', 'data'=>$deck]);
+    }
+
+    function shareDeck(Request $request){
+        
     }
 }

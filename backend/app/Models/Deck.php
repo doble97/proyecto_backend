@@ -11,7 +11,8 @@ class Deck extends Model
 
     protected $fillable=[
         'name',
-        'fk_languages'
+        'fk_languages',
+        'shared'
     ];
 
     public function language(){
