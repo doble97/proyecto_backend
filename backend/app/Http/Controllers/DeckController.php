@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\DeckIdRequest;
 use App\Models\Deck;
 use App\Models\DeckOwner;
+use App\Models\Language;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
@@ -40,9 +41,9 @@ class DeckController extends Controller
     }
 
     //READ ALL DECKS
-    function getAll(Request $request ){
+    function getAll(Request $request){
         try{
-            $decks= $request->user()->decks;
+            $decks= $request->user()->decks; 
             // $registros = Deck::whereAs
             return response()->json(['success'=>true, 'message'=>'Registros encontrados', 'data'=>$decks]);
 
@@ -55,7 +56,7 @@ class DeckController extends Controller
 
     //READ AN DECK
     function getById(Request $request, $id){
-        if($request->route('id') &&  is_numeric($request->route('id'))){
+        if($request->route('id') && is_numeric($request->route('id'))){
             try{
                 $userId = $request->user()->id;
                 $deck = Deck::getDeckByIdAndUser($id, $userId);
@@ -70,4 +71,31 @@ class DeckController extends Controller
         return response()->json(['success'=>false, 'message'=>'Parametros incorrectos'], 400);
     }
 
+    // UPDATE DECK
+    function update(Request $request){
+        $idDeck = $request->input('id');
+        $nameInsert = $request->input('name');
+        $idLanguage = $request->input('fk_language');
+
+        try{
+            $deck = Deck::findOrFail($idDeck);
+        }catch(ModelNotFoundException $err){
+            return response()->json(['success'=>false, 'message'=>'Error en la peticion'], 400);
+        }
+        
+        try{
+            Language::findOrFail($idLanguage);
+        }catch(ModelNotFoundException){
+            return response()->json(['success'=>false, 'message'=>'Lenguaje no encontrado']);
+        }
+
+        $deck->name = $nameInsert;
+        $deck->fk_language = $idLanguage;
+        $deck->save();
+        return response()->json(['success'=>true, 'message'=>'Palabra actualizada', 'data'=>$deck]);
+    }
+
+    function shareDeck(Request $request){
+        
+    }
 }

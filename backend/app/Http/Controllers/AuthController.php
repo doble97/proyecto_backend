@@ -12,7 +12,7 @@ class AuthController extends Controller
     //
     public function login(loginRequest $request){
 
-        $token = $request->user()->createToken('MyApp')->plainTextToken;
+        $token = $request->user()->createToken('kario')->plainTextToken;
         return response()->json([
             'success'=>true,
             'message'=>'Correct login',
@@ -26,9 +26,8 @@ class AuthController extends Controller
         $user->email = $request->input('email');
         $user->password = Hash::make($request->input('password'));
         $user->save();
-        // $token = $user->createToken('MyApp')->plainTextToken(7400); //dos horas
         $token = $user->createToken('kario')->plainTextToken;
-        return response()->json(['success'=>true,'message'=>'User created', 'data'=>['token'=>$token]],201);
+        return response()->json(['success'=>true,'message'=>'User created', 'data'=>['token'=>$token, 'user'=>$user]],201);
 
     }
 }

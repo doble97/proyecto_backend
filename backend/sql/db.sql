@@ -4,12 +4,12 @@ use kario;
 
 create table users(id int primary key auto_increment, name varchar(100),
 email varchar(100) unique, password varchar(250), last_name varchar(50));
-create table friends(fk_user_send_request int,fk_user_receive_request int, FOREIGN KEY fk_user_send_request REFERENCES users(id),
+create table friends(fk_user_send_request int,fk_user_receive_request int, state_request enum('denied','accepted','pending') default 'pending', FOREIGN KEY fk_user_send_request REFERENCES users(id),
 FOREIGN KEY fk_user_receive_request REFERENCES users(id), PRIMARY KEY(fk_user_send_request, fk_user_receive_request));
 
 create table languages(id int primary key auto_increment, name varchar(30), initials varchar(2));
 
-create table decks(id int primary key auto_increment, name varchar(100), fk_languages int, FOREIGN KEY (fk_languages) REFERENCES languages(id));
+create table decks(id int primary key auto_increment, name varchar(100), fk_language int, shared boolean default false, FOREIGN KEY (fk_languages) REFERENCES languages(id));
 
 create table deck_owners(fk_user int, fk_deck int, FOREIGN KEY (fk_user) REFERENCES users(id),
 FOREIGN KEY (fk_deck) REFERENCES decks(id));

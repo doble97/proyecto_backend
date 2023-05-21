@@ -11,7 +11,8 @@ class Deck extends Model
 
     protected $fillable=[
         'name',
-        'fk_languages'
+        'fk_languages',
+        'shared'
     ];
 
     public function language(){
@@ -23,7 +24,7 @@ class Deck extends Model
     public function owner()
     {
         //dice que el modelo DeckOwner tiene la primary key de Deck
-        return $this->hasMany(DeckOwner::class, 'fk_deck');
+        return $this->hasOne(DeckOwner::class, 'fk_deck');
     }
 
 

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('fk_user_send_request')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('fk_user_receive_request');
             $table->foreign('fk_user_receive_request')->references('id')->on('users')->onDelete('cascade');
+            $table->enum('state_request', ['denied', 'accepted', 'pending'])->default('pending');
             $table->primary(['fk_user_send_request', 'fk_user_receive_request']);
             $table->timestamps();
         });

@@ -73,4 +73,31 @@ class WordController extends Controller
 
 }
 
-}
+    // UPDATE WORD
+    function update(Request $request){
+            $idDeckWord = $request->input('id');
+            $wordInsert = $request->input('word');
+            $translationInsert = $request->input('translation'); 
+            $idDeck = $request->input('deck');
+            $word = Word::firstOrCreate(['name'=>$wordInsert]);
+            $translation = Word::firstOrCreate(['name'=>$translationInsert]);
+
+            try{
+                $deckWord = DeckWord::findOrFail($idDeckWord);
+            }catch(ModelNotFoundException $err){
+                return response()->json(['success'=>false, 'message'=>'Error en la peticion'], 400);
+            }
+            
+            try{
+                Deck::findOrFail($idDeck);
+            }catch(ModelNotFoundException){
+                return response()->json(['success'=>false, 'message'=>'Baraja no encontrada']);
+            }
+
+            $deckWord->fk_word = $word->id;
+            $deckWord->fk_translation = $translation->id;
+            $deckWord->fk_deck = $idDeck;
+            $deckWord->save();
+            return response()->json(['success'=>true, 'message'=>'Palabra actualizada', 'data'=>$deckWord]);
+}}
+
