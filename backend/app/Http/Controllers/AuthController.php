@@ -49,7 +49,15 @@ class AuthController extends Controller
         $user->save();
         // $token = $user->createToken('MyApp')->plainTextToken(7400); //dos horas
         $token = $user->createToken('kario')->plainTextToken;
-        return response()->json(['success'=>true,'message'=>'User created', 'data'=>['token'=>$token]],201);
+        return response()->json(['success'=>true,'message'=>'User created', 'data'=>[
+            'token'=>$token,
+            'user'=>$user,
+            "friends"=>0, 
+            "pending_requests"=>0,
+            "decks"=>0,
+            "shared_decks"=>0,
+            "followed_decks"=>0
+            ]],201);
 
     }
 }
