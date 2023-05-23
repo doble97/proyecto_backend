@@ -28,17 +28,3 @@ CREATE TABLE decks_words (
     FOREIGN KEY (fk_translation) REFERENCES words(id),
     FOREIGN KEY (fk_deck) REFERENCES decks(id)
 );
-
-CREATE TABLE phrases (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    text VARCHAR(255),
-    translation varchar(255)
-);
-
-CREATE TABLE phrases_decks_words(
-    fk_phrases int,
-    fk_decks_words int,
-    FOREIGN KEY (fk_phrases) REFERENCES phrases(id),
-    FOREIGN KEY (fk_decks_words) REFERENCES decks_words(id),
-    PRIMARY KEY(fk_phrases,fk_decks_words)
-);

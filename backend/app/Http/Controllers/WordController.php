@@ -8,7 +8,6 @@ use App\Models\DeckWord;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class WordController extends Controller
 {
@@ -40,11 +39,12 @@ class WordController extends Controller
     function delete(Request $request, $id){
         if($request->route('id') &&  is_numeric($request->route('id'))){
             try{
-                $userId = $request->user()->id;
-                $DeckWordRegister = DeckWord::findOrFail($id);
-                $DeckWordRegister->delete();
-                return response()->json(['success'=>true, 'message'=>'registro eliminado correctamente'],204);
-
+                $userId = $request->User()->id;    
+                $deckWord = DeckWord::findOrFail($id);
+                $deck = $deckWord->fk_deck;
+                Deck::getDeckByIdAndUser($deck, $userId);
+                $deckWord->delete();
+                return response()->json(['success'=>true, 'message'=>'palabra eliminada correctamente']);
             }catch (ModelNotFoundException $err){
                 return response()->json(['success'=>false, 'message'=>'Registro no encontrado'], 404);
 
@@ -58,7 +58,7 @@ class WordController extends Controller
             try {
                 $userId = $request->user()->id;
                 $deck = Deck::getDeckByIdAndUser($fk_deck, $userId);
-     
+
                 $words = $deck->words()
                 ->select('words.id as idWord', 'words.name as word', 'translations.id as idTranslation', 'translations.name as translation', 'decks_words.id as idDecksWords')
                 ->join('words as translations', 'decks_words.fk_translation', '=', 'translations.id')
@@ -77,19 +77,22 @@ class WordController extends Controller
     function update(Request $request){
             $idDeckWord = $request->input('id');
             $wordInsert = $request->input('word');
-            $translationInsert = $request->input('translation'); 
+            $translationInsert = $request->input('translation');
             $idDeck = $request->input('deck');
+            $userId = $request->user()->id;
             $word = Word::firstOrCreate(['name'=>$wordInsert]);
             $translation = Word::firstOrCreate(['name'=>$translationInsert]);
 
             try{
                 $deckWord = DeckWord::findOrFail($idDeckWord);
+                $deck = $deckWord->fk_deck;
+                Deck::getDeckByIdAndUser($deck, $userId);
             }catch(ModelNotFoundException $err){
                 return response()->json(['success'=>false, 'message'=>'Error en la peticion'], 400);
             }
             
             try{
-                Deck::findOrFail($idDeck);
+                Deck::getDeckByIdAndUser($idDeck,$userId);
             }catch(ModelNotFoundException){
                 return response()->json(['success'=>false, 'message'=>'Baraja no encontrada']);
             }

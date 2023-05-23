@@ -28,7 +28,8 @@ class DeckController extends Controller
     function delete(Request $request,string $id){
         if($request->route('id') &&  is_numeric($request->route('id'))){
             try{
-                $deck = Deck::findOrFail($id);
+                $userId = $request->user()->id;
+                $deck = Deck::getDeckByIdAndUser($id, $userId);
                 $deck->delete();
                 return response()->json([],204);
 
@@ -76,16 +77,16 @@ class DeckController extends Controller
         $idDeck = $request->input('id');
         $nameInsert = $request->input('name');
         $idLanguage = $request->input('fk_language');
-
+        $userId = $request->user()->id;
         try{
-            $deck = Deck::findOrFail($idDeck);
+            $deck = Deck::getDeckByIdAndUser($idDeck, $userId);
         }catch(ModelNotFoundException $err){
             return response()->json(['success'=>false, 'message'=>'Error en la peticion'], 400);
         }
         
         try{
             Language::findOrFail($idLanguage);
-        }catch(ModelNotFoundException){
+        }catch(ModelNotFoundException $err){
             return response()->json(['success'=>false, 'message'=>'Lenguaje no encontrado']);
         }
 
@@ -95,7 +96,32 @@ class DeckController extends Controller
         return response()->json(['success'=>true, 'message'=>'Palabra actualizada', 'data'=>$deck]);
     }
 
+    // Share Deck
     function shareDeck(Request $request){
-        
+        $idDeck = $request->input('id');
+        $user = $request->user();
+        try{
+            $deck = Deck::getDeckByIdAndUser($idDeck, $user->id);
+            $deck->shared = true;
+            $deck->save();
+            return response()->json(['success'=>True, 'message'=>'Baraja publicada']);
+    } catch(ModelNotFoundException $err){
+        return response()->json(['success'=>false, 'message'=>'Baraja no encontrada'], 400);
     }
+}
+
+    // Hide Deck
+    function hideDeck(Request $request){
+        $idDeck = $request->input('id');
+        $user = $request->user();
+        try{
+            $deck = Deck::getDeckByIdAndUser($idDeck, $user->id);
+            $deck->shared = false;
+            $deck->save();
+            return response()->json(['success'=>True, 'message'=>'Baraja ocultada']);
+    } catch(ModelNotFoundException $err){
+        return response()->json(['success'=>false, 'message'=>'Baraja no encontrada'], 400);
+    }
+}
+
 }

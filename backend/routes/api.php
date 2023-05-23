@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DeckController;
 use App\Http\Controllers\WordController;
 use App\Http\Controllers\CountDeckController;
+use App\Http\Controllers\FriendController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,18 +30,20 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/user', function(Request $request){
         return $request->user();
     });
-    //COUNT DECKS
-    Route::get('/count-all', [CountDeckController::class, 'countAll']);
-    Route::get('/count-shared', [CountDeckController::class, 'countShared']);
-    Route::get('/count-collaborator', [CountDeckController::class, 'countCollaborator']);
-
-
     //DECKS
     Route::get('/deck/{id}', [DeckController::class, 'getById']);
     Route::get('/deck', [DeckController::class, 'getAll']);
     Route::post('/create-deck',[DeckController::class, 'create']);
     Route::delete('/deck/{id}',[DeckController::class, 'delete']);
     Route::put('/update-deck',[DeckController::class, 'update']);
+    Route::put('/share',[DeckController::class, 'shareDeck']);
+    Route::put('/hide',[DeckController::class, 'hideDeck']);
+
+    //FRIENDS
+    Route::post('/send', [FriendController::class, 'send']);
+    Route::get('/petitions', [FriendController::class, 'petition']);
+    Route::put('/accept-petition', [FriendController::class, 'accept_petition']);
+
 
 
     //WORDS
@@ -56,4 +59,3 @@ Route::middleware('auth:sanctum')->group(function(){
         ],401);
     });
 });
-

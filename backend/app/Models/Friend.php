@@ -10,11 +10,9 @@ class Friend extends Model
     use HasFactory;
 
     protected $table='friends';
-
     protected $fillable = [
         'state_request'
     ];
- 
 
     public function userSendRequest()
     {
