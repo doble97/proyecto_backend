@@ -3,6 +3,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Models\Deck;
+use App\Models\DeckOwner;
+use App\Models\Friend;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -11,12 +14,30 @@ class AuthController extends Controller
 {
     //
     public function login(loginRequest $request){
-
-        $token = $request->user()->createToken('kario')->plainTextToken;
+        $userId= $request->user()->id;
+        $token = $request->user()->createToken('MyApp')->plainTextToken;
+        $pendind_requests = Friend::where('fk_user_receive_request', $userId)->count();
+        $decks = DeckOwner::where('fk_user', $userId)->count();
+        $shared_decks=0;
+        $followed_decks=0;
+        $friends = Friend::where(function($query) use($userId){
+            $query->where('fk_user_receive_request', $userId)
+            ->orWhere('fk_user_send_request', $userId);
+        })
+        ->where('state_request','pending')
+        ->count();
         return response()->json([
             'success'=>true,
             'message'=>'Correct login',
-            'data'=>['token'=>$token, 'user'=>$request->user()],],200);
+            'data'=>[
+                'token'=>$token, 
+                'user'=>$request->user(),
+                "friends"=>$friends, 
+                "pending_requests"=>$pendind_requests,
+                "decks"=>$decks,
+                "shared_decks"=>$shared_decks,
+                "followed_decks"=>$followed_decks
+            ],],200);
     }
 
     public function register(registerRequest $request){
@@ -27,7 +48,15 @@ class AuthController extends Controller
         $user->password = Hash::make($request->input('password'));
         $user->save();
         $token = $user->createToken('kario')->plainTextToken;
-        return response()->json(['success'=>true,'message'=>'User created', 'data'=>['token'=>$token, 'user'=>$user]],201);
+        return response()->json(['success'=>true,'message'=>'User created', 'data'=>[
+            'token'=>$token,
+            'user'=>$user,
+            "friends"=>0, 
+            "pending_requests"=>0,
+            "decks"=>0,
+            "shared_decks"=>0,
+            "followed_decks"=>0
+            ]],201);
 
     }
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DeckController;
 use App\Http\Controllers\WordController;
 use App\Http\Controllers\CountDeckController;
+use App\Http\Controllers\FriendController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,7 +39,7 @@ Route::middleware('auth:sanctum')->group(function(){
     //DECKS
     Route::get('/deck/{id}', [DeckController::class, 'getById']);
     Route::get('/deck', [DeckController::class, 'getAll']);
-    Route::post('/create-deck',[DeckController::class, 'create']);
+    Route::post('/create-deck/{shared?}',[DeckController::class, 'create']);
     Route::delete('/deck/{id}',[DeckController::class, 'delete']);
     Route::put('/update-deck',[DeckController::class, 'update']);
 
@@ -49,6 +50,13 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/insert-word',[WordController::class, 'insertWord']);
     Route::delete('/word/{id}',[WordController::class, 'delete']);
     Route::put('/update-word',[WordController::class, 'update']);
+
+    //FRIENDS
+    Route::post('/friend', [FriendController::class, 'searchFriend']);
+
+
+
+
     Route::fallback(function(){
         return response()->json([
             'success'=>false,

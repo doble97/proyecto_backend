@@ -13,10 +13,12 @@ use Illuminate\Http\Request;
 class DeckController extends Controller
 {
     //CREATE
-    function create(Request $request){
+    function create(Request $request, $shared = null){
         $deck = new Deck();
         $deck->name = $request->input('name');
         $deck->fk_language =  $request-> input('fk_language');
+        $deck->shared = $shared != null;
+
         $deck->save();
         $deck_owner = new DeckOwner();
         $deck_owner->fk_user = $request->user()->id;
