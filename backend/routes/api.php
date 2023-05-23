@@ -33,18 +33,13 @@ Route::middleware('auth:sanctum')->group(function(){
     //DECKS
     Route::get('/deck/{id}', [DeckController::class, 'getById']);
     Route::get('/deck', [DeckController::class, 'getAll']);
-    Route::post('/create-deck',[DeckController::class, 'create']);
+    Route::post('/create-deck/{shared?}',[DeckController::class, 'create']);
     Route::delete('/deck/{id}',[DeckController::class, 'delete']);
     Route::put('/update-deck',[DeckController::class, 'update']);
     Route::put('/share',[DeckController::class, 'shareDeck']);
     Route::put('/hide',[DeckController::class, 'hideDeck']);
-
-    //FRIENDS
-    Route::post('/send', [FriendController::class, 'send']);
-    Route::get('/petitions', [FriendController::class, 'petition']);
-    Route::put('/accept-petition', [FriendController::class, 'accept_petition']);
-
-
+    Route::get('/deckShared',[DeckController::class, 'showShareDeck']);
+    Route::get('/deckFollowed',[DeckController::class, 'showFollowDeck']);
 
     //WORDS
     // Route::get('/word/{id}', [WordController::class, 'getById']);
@@ -52,6 +47,16 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::post('/insert-word',[WordController::class, 'insertWord']);
     Route::delete('/word/{id}',[WordController::class, 'delete']);
     Route::put('/update-word',[WordController::class, 'update']);
+
+    //FRIENDS
+    Route::post('/friend', [FriendController::class, 'searchFriend']);
+    Route::post('/send', [FriendController::class, 'send']);
+    Route::get('/petitions', [FriendController::class, 'petition']);
+    Route::put('/accept-petition', [FriendController::class, 'accept_petition']);
+    Route::put('/deny-petition', [FriendController::class, 'deny_petition']);
+    Route::get('/friends', [FriendController::class, 'friend']);
+
+
     Route::fallback(function(){
         return response()->json([
             'success'=>false,
