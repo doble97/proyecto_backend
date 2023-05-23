@@ -39,4 +39,26 @@ class FriendController extends Controller
                 ->get();
                 return response()->json(['success'=>true,'data'=>$info]);
             }
+
+            
+            // ACCEPT PETITION
+            public function accept_petition(Request $request){
+                $friendId = $request->input('user');
+                $userId = $request->user()->id;
+                try{
+                    $friend = Friend::where('fk_user_send_request', $friendId)
+                        ->where('fk_user_receive_request', $userId)
+                        ->first();
+            
+                    if($friend){
+                        $friend->state_request = 'accepted';
+                        $friend->save();
+                        return response()->json(['success'=>true,'message'=>'Solicitud aceptada']);
+                    } else {
+                        return response()->json(['success'=>false, 'message'=>'Registro no encontrado'], 404);
+                    }
+                } catch(ModelNotFoundException $err){
+                    return response()->json(['success'=>false, 'message'=>'Registro no encontrado'], 404);
+                }
+            }
 }
